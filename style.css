@@ -1,0 +1,168 @@
+/* General Styling & Fonts */
+body {
+    font-family: serif; /* Change font to serif as in the image */
+    background-color: #fcf8f4; /* Light beige background */
+    color: #333;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* New Header and Navigation Styling */
+.new-header {
+    text-align: center;
+    padding: 20px 0;
+    margin-bottom: 20px;
+}
+
+.logo {
+    font-family: serif;
+    font-size: 3rem;
+    color: #8c5e53; /* Dark red/brown color */
+    margin-bottom: 10px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #555;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #8c5e53; /* Match logo color */
+}
+
+/* Main Content Container Styling */
+.posts-container {
+    background-color: #d1e2d1; /* Muted green color */
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.posts-container h2 {
+    text-align: center;
+    color: #588058; /* Darker green color */
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+/* Post Styling */
+.post {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+.post h3 {
+    color: #8c5e53; /* Match logo color */
+    margin-top: 0;
+    font-size: 1.5rem;
+}
+
+.post-meta {
+    color: #777;
+    font-style: italic;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+/* Search Form Styling - adjusted for new layout */
+.search-form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+.search-input {
+    flex-grow: 1;
+    max-width: 400px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+}
+.search-button {
+    padding: 12px 20px;
+    border: none;
+    background-color: #588058; /* Match post container color */
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.search-button:hover {
+    background-color: #426442;
+}
+
+/* Pagination Styling - existing */
+.pagination-container {
+    text-align: center;
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+.page-link {
+    display: inline-block;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #588058;
+    transition: background-color 0.3s, color 0.3s;
+}
+.page-link.active {
+    background-color: #588058;
+    color: white;
+    border-color: #588058;
+}
+.page-link:hover:not(.active) {
+    background-color: #f0f0f0;
+}
+.search-results-info {
+    text-align: center;
+    font-style: italic;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* New Footer Styling */
+.footer {
+    text-align: center;
+    margin-top: 40px;
+    color: #777;
+    font-size: 0.8rem;
+}
+
+/* New Form Styling (for login/register/add_post) */
+.form-container {
+    background-color: #d1e2d1;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.submit-btn {
+    background-color: #588058;
+}
+.submit-btn:hover {
+    background-color: #426442;
+}
