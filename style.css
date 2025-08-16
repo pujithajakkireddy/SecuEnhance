@@ -160,9 +160,76 @@ nav ul li a:hover {
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+.form-group {
+    margin-bottom: 20px;
+}
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #588058;
+}
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #c0d4c0;
+    border-radius: 5px;
+    box-sizing: border-box; /* Ensures padding doesn't affect total width */
+    font-size: 1rem;
+}
+.form-group textarea {
+    resize: vertical;
+    min-height: 150px;
+}
 .submit-btn {
+    width: 100%;
+    padding: 15px;
+    border: none;
     background-color: #588058;
+    color: white;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 .submit-btn:hover {
     background-color: #426442;
+}
+
+/* Messaging Styles */
+.message {
+    text-align: center;
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #333;
+    background-color: #e6e6e6; /* A neutral gray for general messages */
+    border: 1px solid #ccc;
+}
+.message.error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+.message.success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+/* Back Link Style */
+.back-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #8c5e53;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+.back-link:hover {
+    color: #588058;
 }

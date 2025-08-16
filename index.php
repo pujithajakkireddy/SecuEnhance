@@ -1,4 +1,5 @@
 <?php
+// This file handles the database connection.
 require_once 'db_connect.php';
 session_start();
 
@@ -13,7 +14,8 @@ try {
     $search_params = [];
     if (isset($_GET['search_query']) && !empty(trim($_GET['search_query']))) {
         $search_query = trim($_GET['search_query']);
-        $search_where_clause = " (title LIKE ? OR context LIKE ?)";
+        // 1. Corrected 'context' to 'content' in the search clause.
+        $search_where_clause = " (title LIKE ? OR content LIKE ?)";
         $search_params = ["%" . $search_query . "%", "%" . $search_query . "%"];
     }
     
@@ -36,7 +38,8 @@ try {
 
     // Get the total number of posts that match the criteria
     $count_sql = "SELECT COUNT(*) FROM posts" . $combined_where_clause;
-    $count_stmt = $conn->prepare($count_sql);
+    // 2. Used the correct variable for the PDO connection.
+    $count_stmt = $pdo->prepare($count_sql);
 
     // Bind parameters for the count query
     $count_param_index = 1;
@@ -54,14 +57,17 @@ try {
 
     $current_page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
     if ($current_page < 1) { $current_page = 1; }
-    if ($current_page > $total_pages) { $current_page = $total_pages; }
+    // Handles the case where no posts are found, preventing division by zero.
+    if ($total_pages > 0 && $current_page > $total_pages) { $current_page = $total_pages; }
 
     $offset = ($current_page - 1) * $posts_per_page;
     if ($offset < 0) { $offset = 0; }
 
     // --- Final Query to Fetch Posts ---
-    $sql = "SELECT id, title, context, created_at FROM posts" . $combined_where_clause . " ORDER BY created_at DESC LIMIT ? OFFSET ?";
-    $stmt = $conn->prepare($sql);
+    // 3. Corrected 'context' to 'content' in the final query.
+    $sql = "SELECT id, title, content, created_at FROM posts" . $combined_where_clause . " ORDER BY created_at DESC LIMIT ? OFFSET ?";
+    // 4. Used the correct variable for the PDO connection.
+    $stmt = $pdo->prepare($sql);
 
     // This is the CRUCIAL fix: Explicitly binding parameters with correct types
     $param_index = 1;
@@ -98,7 +104,9 @@ try {
                 <ul>
                     <li><a href="index.php">Home</a></li>
                     <?php if (isset($_SESSION['user_id'])): ?>
-                        <li><a href="add_post.php">Create Post</a></li>
+                        <?php if (isset($_SESSION['user_role']) && ($_SESSION['user_role'] === 'admin' || $_SESSION['user_role'] === 'editor')): ?>
+                            <li><a href="add_post.php">Create Post</a></li>
+                        <?php endif; ?>
                         <li><a href="logout.php">Logout</a></li>
                     <?php else: ?>
                         <li><a href="login.php">Login</a></li>
@@ -124,7 +132,7 @@ try {
                     <div class="post">
                         <h3><?php echo htmlspecialchars($post['title']); ?></h3>
                         <p class="post-meta">Posted on: <?php echo date("F j, Y", strtotime($post['created_at'])); ?></p>
-                        <p><?php echo nl2br(htmlspecialchars($post['context'])); ?></p>
+                        <p><?php echo nl2br(htmlspecialchars($post['content'])); ?></p>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>

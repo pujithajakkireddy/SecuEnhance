@@ -5,24 +5,35 @@ session_start();
 $message = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = htmlspecialchars(trim($_POST['username']));
+    $username = trim($_POST['username']);
     $password = $_POST['password'];
 
-    try {
-        $stmt = $conn->prepare("SELECT id, username, password FROM users WHERE username = ?");
-        $stmt->execute([$username]);
-        $user = $stmt->fetch();
+    if (empty($username) || empty($password)) {
+        $message = "Please enter both username and password.";
+    } else {
+        try {
+            // Updated query to also select the username
+            $stmt = $pdo->prepare("SELECT id, username, password, role FROM users WHERE username = ?");
+            $stmt->execute([$username]);
+            $user = $stmt->fetch();
 
-        if ($user && password_verify($password, $user['password'])) {
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['username'] = $user['username'];
-            header("Location: index.php"); // Redirect to home page
-            exit();
-        } else {
-            $message = "Invalid username or password.";
+            if ($user && password_verify($password, $user['password'])) {
+                // Login successful.
+                
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user_role'] = $user['role'];
+                
+                // ADDED THIS LINE: Store the username in the session
+                $_SESSION['username'] = $user['username'];
+                
+                header("Location: index.php");
+                exit();
+            } else {
+                $message = "Invalid username or password.";
+            }
+        } catch (PDOException $e) {
+            $message = "Error: Could not log in. " . $e->getMessage();
         }
-    } catch (PDOException $e) {
-        $message = "Error: Could not log in. " . $e->getMessage();
     }
 }
 ?>
